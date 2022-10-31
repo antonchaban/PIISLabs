@@ -157,19 +157,21 @@ def game_between_two_computers_pvs(depth=1):
         end = time.time()
 
         if move == None:
-            print("GG")
+            print("GG, checkmate")
             break
-
 
         print("Move in UCI format:", move)
         print("Time taken by Move:", end - start)
         print("Moves taken:", n)
         print("FiveFold", board.is_fivefold_repetition())
+
         board.push(move)
         # display(SVG(chess.svg.board(board, size=400)))
         print(board)
         print("\n")
         n = n + 1
+    if board.is_fivefold_repetition():
+        print("GG, fivefold")
 
 
 def game_between_two_computers_negaScout(depth=1):
@@ -188,18 +190,21 @@ def game_between_two_computers_negaScout(depth=1):
         end = time.time()
 
         if move == None:
-            print("GG")
+            print("GG, checkmate")
             break
 
         print("Move in UCI format:", move)
         print("Time taken by Move:", end - start)
         print("Moves taken:", n)
         print("FiveFold", board.is_fivefold_repetition())
+
         board.push(move)
         # display(SVG(chess.svg.board(board, size=400)))
         print(board)
         print("\n")
         n = n + 1
+    if board.is_fivefold_repetition():
+        print("GG, fivefold")
 
 
 def game_between_two_computers_negaMax(depth=1):
@@ -218,18 +223,21 @@ def game_between_two_computers_negaMax(depth=1):
         end = time.time()
 
         if move == None:
-            print("GG")
+            print("GG, checkmate")
             break
 
         print("Move in UCI format:", move)
         print("Time taken by Move:", end - start)
         print("Moves taken:", n)
         print("FiveFold", board.is_fivefold_repetition())
+
         board.push(move)
         # display(SVG(chess.svg.board(board, size=400)))
         print(board)
         print("\n")
         n = n + 1
+    if board.is_fivefold_repetition():
+        print("GG, fivefold")
 
 
 if __name__ == '__main__':
