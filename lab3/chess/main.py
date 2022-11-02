@@ -73,26 +73,17 @@ def best_move_using_negaScout(board_instance, depth, alpha=-999999, beta=999999)
         return scoreIn
 
     score = -1_000_000
-    n = beta
-    best_move = None
+    bestMove = None
     for legal_move in board_instance.legal_moves:
         move = chess.Move.from_uci(str(legal_move))
         boardCopy = board_instance.copy()
         boardCopy.push(move)
-        cur = -negaScout(boardCopy, depth - 1, -n, -alpha)
-        if cur > score:
-            if n == beta or depth <= 2:
-                score = cur
-            else:
-                score = -negaScout(boardCopy, depth - 1, -beta, -cur)
-        if score > alpha:
-            alpha = score
-            best_move = move
-        if alpha >= beta:
-            return best_move
-        n = alpha + 1
+        value = -negaScout(boardCopy, depth, alpha, beta)
+        if value > score:
+            score = value
+            bestMove = move
 
-    return best_move
+    return bestMove
 
 
 def best_move_using_pvs(board_instance, depth, alpha=-999999, beta=999999):
@@ -118,27 +109,18 @@ def best_move_using_pvs(board_instance, depth, alpha=-999999, beta=999999):
 
         return alphaIn
 
-    bSearchPv = True
-    best_move = None
+    score = -1_000_000
+    bestMove = None
     for legal_move in board_instance.legal_moves:
         move = chess.Move.from_uci(str(legal_move))
         boardCopy = board_instance.copy()
         boardCopy.push(move)
-        if bSearchPv:
-            cur = -pvs(boardCopy, depth - 1, -beta, -alpha)
-        else:
-            cur = -pvs(boardCopy, depth - 1, -alpha - 1, -alpha)
-            if alpha < cur < beta:
-                cur = -pvs(boardCopy, depth - 1, -beta, -alpha)
-        if cur >= beta:
-            best_move = move
-            return best_move
-        if cur > alpha:
-            best_move = move
-            alpha = cur
-            bSearchPv = False
+        value = -pvs(boardCopy, depth, alpha, beta)
+        if value > score:
+            score = value
+            bestMove = move
 
-    return best_move
+    return bestMove
 
 
 def game_between_two_computers_pvs(depth=1):
@@ -241,7 +223,7 @@ def game_between_two_computers_negaMax(depth=1):
 
 
 if __name__ == '__main__':
-    game_between_two_computers_negaMax()
+    # game_between_two_computers_negaMax()
     # game_between_two_computers_negaScout()
-    # game_between_two_computers_pvs()
+    game_between_two_computers_pvs()
     engine.quit()
